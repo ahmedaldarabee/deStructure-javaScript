@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>destructure array</title>
+
+    <style>
+
+        .text-content {
+            width: 300px;
+            height: 300px;
+            font-size: 15px;
+        }
+        
+        .icon-modify {
+            width: 64px;
+            height: 64px;
+        }
+
+    </style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+
+</body>
+
+    <script>
+        
+        // destructure with array
+
+        function exampleOne(){
+            let arrStudent = ["ahmed","ali","osama","karam"];
+      
+            let first = 1;
+            let second = 1;
+
+            let third = 1;
+            let fourth = 1;
+
+            [first = "malek",second,third,fourth , five] = arrStudent;
+            console.log(five); // when you think about get element not exist will not give you error , in another hand side will give you undefine
+            
+        }
+        
+        function exampleTwo(){
+            let arrStudent = ["Ahmed","Sayed","Ali",["Shady","Amr",["Mohamed","Gamal"]]];
+
+            // Access to the Shady and gamal in easily way
+            let [ , , ,  [shady , , [ , gamal]]] = arrStudent;
+
+            console.log("first name : " , shady);
+            console.log("last  name : " , gamal);
+        }
+        
+        function exampleThree(){
+            // swapping variable
+            let book = "software designing and analysis";
+            let instructor = "ahmed nayel al darabee";
+            
+            [book , instructor] = [instructor , book]; 
+            console.log(book)
+            console.log(instructor)
+        }
+
+        // destructure with objects
+        
+        function exampleFour(){
+            let student = {
+                name : "ahmed",
+                age : 21,
+                major : "SE"
+            }
+
+            let nameOFStudent; 
+            let ageOFStudent;
+            let se;
+
+            // how to access
+            ({name : nameOFStudent , age : ageOFStudent , major : se = "Software"} = student)
+            console.log(nameOFStudent);
+
+
+            // another way !
+            ({name} = student)
+            console.log(name);
+            // se = "Software Engineer";
+            console.log(se); // will not print the -> Software <- where will do override to this value !
+        }
+
+        function exampleFive(){
+            let student = {
+                name : "ahmed nayel",
+                age : 21,
+                skills : {
+                    html : 70,
+                    css : 80,
+                    javaScript : 80
+                }
+            }
+
+            let htmlLang;
+            let cssLang;
+            let jsLang;
+
+            // way one : 
+            ({html : htmlLang , css : cssLang , javaScript : jsLang } = student.skills)
+            
+            // way two :
+            // ({ skills : {html : htmlLang , css : cssLang , javaScript : jsLang} } = student)
+
+            console.log('HTML progress: ' ,htmlLang);
+            console.log('CSS progress: ' ,cssLang);
+            console.log('JAVASCRIPT progress: ' ,jsLang);
+        }
+
+        function exampleSix(){
+            let studentData = {
+                name : "ahmed nayel al darabee",
+                major : "software engineer",
+                age : 21,
+                year : 2003,
+                skills : {
+                    html : 88,
+                    css : 90,
+                    js : 700
+                }
+            }
+
+            showStudentData(studentData);
+
+            function showStudentData(object){
+
+                let stdName;
+                let stdMajor;
+
+                ({name : stdName , major : stdMajor , skills : { css }  } = object)
+                console.log(stdName);
+                console.log('Your Css Progress: ', css);
+            }
+        }
+
+        // mixed between array and object
+        function exampleSeven(){
+            let studentInfo = {
+                name : "ahmed al darabee",
+                skills : ["html","css","javaScript","tailwind"]
+            }
+
+            let js;
+            
+           ({name : nameOFStudent , skills : [,,js,] } = studentInfo)
+            
+            console.log("your current studying language: " , js)
+        
+        
+        }
+
+        function challenge(){
+            let neededData = 1;
+            let myFriends = [
+                { title: "Osama", age: 39, available: true, skills: ["HTML", "CSS"] },
+                { title: "Ahmed", age: 25, available: false, skills: ["Python", "Django"] },
+                { title: "Sayed", age: 33, available: true, skills: ["PHP", "Laravel"] },
+            ];   
+        
+            getFriendData(neededData , myFriends );
+
+            function getFriendData(index,arrOFObject){
+                if(index > arrOFObject.length-1 || index < 0){
+
+                    Swal.fire({
+                        title: "Text Empty",
+                        text: "Please added index correctly!",
+                        icon: "warning",
+                        customClass: {
+                            popup: 'text-content',
+                            icon: 'icon-modify'
+                        }
+                    });
+
+                }else {
+                    let currentObj = arrOFObject[index];
+                    let av;
+                    let lastData;
+                    ({title : name , age : friendAge , available : av  , skills :[ , lastData]} = currentObj)
+                
+                    let result;
+                    if(av == true){
+                        result = 'available'; 
+                    }else{
+                        result = 'not available'; 
+                    }
+
+                    console.log("The name be as : " ,name );
+                    console.log("the age is : " ,friendAge );
+                    console.log("the availability to the work is : " ,result );
+                    console.log("your skills is : " , lastData );
+                }
+            }
+        }
+
+        challenge()
+
+    </script>
+
+</html>
